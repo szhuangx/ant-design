@@ -13,7 +13,16 @@ resources:
       fetchDepth: 1
 
 jobs:
+  - job: instll
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '11.x'
+      - script: npm install
+        displayName: install
+
   - job: test
+    dependsOn: install
     pool:
       vmImage: 'Ubuntu-16.04'
     strategy:
@@ -51,13 +60,8 @@ jobs:
           REACT: 15
           TEST_TYPE: test:node
     steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: '11.x'
       - script: echo $(REACT) $(TEST_TYPE)
         displayName: echo env
-      - script: npm install
-        displayName: install
       - script: scripts/install-react.sh
         displayName: install-react
       - script: scripts/travis-script.sh
