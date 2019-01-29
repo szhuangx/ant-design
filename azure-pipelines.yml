@@ -13,7 +13,7 @@ resources:
       fetchDepth: 1
 
 jobs:
-  - job: instll
+  - job: install
     steps:
       - task: NodeTool@0
         inputs:
